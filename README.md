@@ -5,13 +5,13 @@
   <img src="https://img.shields.io/badge/ISA-RV32I-red?style=for-the-badge" alt="RV32I"/>
 </p>
 
-# 🖥️ RISC-V Single-Cycle Processor — Verilog HDL
+# ðŸ–¥ï¸ RISC-V Single-Cycle Processor â€” Verilog HDL
 
 > A complete 32-bit RISC-V single-cycle processor implementing the RV32I base integer instruction set, designed from scratch in Verilog HDL with modular architecture and comprehensive testbench.
 
 ---
 
-## 📋 Table of Contents
+## ðŸ“‹ Table of Contents
 
 - [Overview](#-overview)
 - [Architecture](#-architecture)
@@ -26,51 +26,51 @@
 
 ---
 
-## 🔍 Overview
+## ðŸ” Overview
 
 This project implements a **32-bit RISC-V single-cycle processor** based on the **RV32I** base integer instruction set architecture. Every instruction executes in a single clock cycle, making this design ideal for understanding processor fundamentals.
 
 ### Key Highlights
-- 🏗️ **9 Modular Components** — Clean separation of concerns
-- 📝 **15+ Instructions** — R-type, I-type, S-type, B-type
-- 🔄 **Complete Datapath** — PC → IMEM → RegFile → ALU → DMEM → WriteBack
-- ✅ **Verified** — Self-checking testbench with automated PASS/FAIL
-- 📊 **VCD Waveform** — Full pipeline visibility for debugging
-- 🎯 **Pre-loaded Test Program** — Arithmetic, load/store, and branch testing
+- ðŸ—ï¸ **9 Modular Components** â€” Clean separation of concerns
+- ðŸ“ **15+ Instructions** â€” R-type, I-type, S-type, B-type
+- ðŸ”„ **Complete Datapath** â€” PC â†’ IMEM â†’ RegFile â†’ ALU â†’ DMEM â†’ WriteBack
+- âœ… **Verified** â€” Self-checking testbench with automated PASS/FAIL
+- ðŸ“Š **VCD Waveform** â€” Full pipeline visibility for debugging
+- ðŸŽ¯ **Pre-loaded Test Program** â€” Arithmetic, load/store, and branch testing
 
 ---
 
-## 🏗️ Architecture
+## ðŸ—ï¸ Architecture
 
 ```
                               RISC-V SINGLE-CYCLE PROCESSOR
-    ┌─────────────────────────────────────────────────────────────────────┐
-    │                                                                     │
-    │   ┌────┐    ┌──────┐    ┌──────────┐          ┌──────────┐          │
-    │   │ PC │───►│ IMEM │───►│ CONTROL  │          │ ALU CTRL │          │
-    │   └──┬─┘    └──┬───┘    └────┬─────┘          └────┬─────┘          │
-    │      │         │             │                     │                 │
-    │   ┌──▼──┐      │        ┌────▼─────┐          ┌───▼────┐           │
-    │   │ +4  │      │        │ RegFile  │          │  ALU   │           │
-    │   └──┬──┘      │        │ 32x32bit ├─────────►│ 32-bit ├──┐       │
-    │      │         │        └────┬─────┘          └────────┘  │       │
-    │   ┌──▼──────┐  │             │                     │       │       │
-    │   │  MUX    │◄─┼─────────────┼───── Branch ────────┘       │       │
-    │   │ PC_NEXT │  │         ┌───▼───┐                    ┌───▼───┐  │
-    │   └─────────┘  │         │IMM GEN│                    │ DMEM  │  │
-    │                │         └───────┘                    └───┬───┘  │
-    │                │                                         │       │
-    │                │              ┌───── WriteBack MUX ◄─────┘       │
-    │                │              │   (ALU Result / Mem Data)        │
-    └────────────────┼──────────────┼──────────────────────────────────┘
-                     │              │
+    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”
+    â”‚                                                                     â”‚
+    â”‚   â”Œâ”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”    â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”          â”Œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”          â”‚
+    â”‚   â”‚ PC â”‚â”€â”€â”€â–ºâ”‚ IMEM â”‚â”€â”€â”€â–ºâ”‚ CONTROL  â”‚          â”‚ ALU CTRL â”‚          â”‚
+    â”‚   â””â”€â”€â”¬â”€â”˜    â””â”€â”€â”¬â”€â”€â”€â”˜    â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜          â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜          â”‚
+    â”‚      â”‚         â”‚             â”‚                     â”‚                 â”‚
+    â”‚   â”Œâ”€â”€â–¼â”€â”€â”      â”‚        â”Œâ”€â”€â”€â”€â–¼â”€â”€â”€â”€â”€â”          â”Œâ”€â”€â”€â–¼â”€â”€â”€â”€â”           â”‚
+    â”‚   â”‚ +4  â”‚      â”‚        â”‚ RegFile  â”‚          â”‚  ALU   â”‚           â”‚
+    â”‚   â””â”€â”€â”¬â”€â”€â”˜      â”‚        â”‚ 32x32bit â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â–ºâ”‚ 32-bit â”œâ”€â”€â”       â”‚
+    â”‚      â”‚         â”‚        â””â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”˜          â””â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚       â”‚
+    â”‚   â”Œâ”€â”€â–¼â”€â”€â”€â”€â”€â”€â”  â”‚             â”‚                     â”‚       â”‚       â”‚
+    â”‚   â”‚  MUX    â”‚â—„â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€ Branch â”€â”€â”€â”€â”€â”€â”€â”€â”˜       â”‚       â”‚
+    â”‚   â”‚ PC_NEXT â”‚  â”‚         â”Œâ”€â”€â”€â–¼â”€â”€â”€â”                    â”Œâ”€â”€â”€â–¼â”€â”€â”€â”  â”‚
+    â”‚   â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜  â”‚         â”‚IMM GENâ”‚                    â”‚ DMEM  â”‚  â”‚
+    â”‚                â”‚         â””â”€â”€â”€â”€â”€â”€â”€â”˜                    â””â”€â”€â”€â”¬â”€â”€â”€â”˜  â”‚
+    â”‚                â”‚                                         â”‚       â”‚
+    â”‚                â”‚              â”Œâ”€â”€â”€â”€â”€ WriteBack MUX â—„â”€â”€â”€â”€â”€â”˜       â”‚
+    â”‚                â”‚              â”‚   (ALU Result / Mem Data)        â”‚
+    â””â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¼â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”˜
+                     â”‚              â”‚
                 Instruction     Write Data
                   [31:0]        to RegFile
 ```
 
 ---
 
-## 📝 Supported Instructions
+## ðŸ“ Supported Instructions
 
 ### R-Type (Register-Register)
 | Instruction | Operation | Description |
@@ -104,47 +104,47 @@ This project implements a **32-bit RISC-V single-cycle processor** based on the 
 
 ---
 
-## 🧩 Module Hierarchy
+## ðŸ§© Module Hierarchy
 
 ```
 riscv_top
-├── program_counter      # 32-bit PC with synchronous reset
-├── instruction_memory   # 256x32-bit ROM with test program
-├── control_unit         # Main decoder (opcode → control signals)
-├── register_file        # 32x32-bit dual-port register file (x0=0)
-├── imm_gen              # Immediate generator (I/S/B/U/J types)
-├── alu_control          # ALU operation decoder (funct3/funct7)
-├── alu_32bit            # 32-bit ALU (10 operations)
-└── data_memory          # 256x32-bit RAM for load/store
+â”œâ”€â”€ program_counter      # 32-bit PC with synchronous reset
+â”œâ”€â”€ instruction_memory   # 256x32-bit ROM with test program
+â”œâ”€â”€ control_unit         # Main decoder (opcode â†’ control signals)
+â”œâ”€â”€ register_file        # 32x32-bit dual-port register file (x0=0)
+â”œâ”€â”€ imm_gen              # Immediate generator (I/S/B/U/J types)
+â”œâ”€â”€ alu_control          # ALU operation decoder (funct3/funct7)
+â”œâ”€â”€ alu_32bit            # 32-bit ALU (10 operations)
+â””â”€â”€ data_memory          # 256x32-bit RAM for load/store
 ```
 
 ---
 
-## 📁 File Structure
+## ðŸ“ File Structure
 
 ```
 VLSI-RISCV-SingleCycle-Processor/
-├── src/
-│   ├── program_counter.v      # Program Counter
-│   ├── instruction_memory.v   # Instruction ROM
-│   ├── register_file.v        # 32x32 Register File
-│   ├── alu_32bit.v            # 32-bit ALU
-│   ├── alu_control.v          # ALU Control Decoder
-│   ├── control_unit.v         # Main Control Unit
-│   ├── imm_gen.v              # Immediate Generator
-│   ├── data_memory.v          # Data RAM
-│   └── riscv_top.v            # Top-Level Integration
-├── testbench/
-│   └── riscv_tb.v             # Self-Checking Testbench
-├── docs/
-├── .gitignore
-├── LICENSE
-└── README.md
+â”œâ”€â”€ src/
+â”‚   â”œâ”€â”€ program_counter.v      # Program Counter
+â”‚   â”œâ”€â”€ instruction_memory.v   # Instruction ROM
+â”‚   â”œâ”€â”€ register_file.v        # 32x32 Register File
+â”‚   â”œâ”€â”€ alu_32bit.v            # 32-bit ALU
+â”‚   â”œâ”€â”€ alu_control.v          # ALU Control Decoder
+â”‚   â”œâ”€â”€ control_unit.v         # Main Control Unit
+â”‚   â”œâ”€â”€ imm_gen.v              # Immediate Generator
+â”‚   â”œâ”€â”€ data_memory.v          # Data RAM
+â”‚   â””â”€â”€ riscv_top.v            # Top-Level Integration
+â”œâ”€â”€ testbench/
+â”‚   â””â”€â”€ riscv_tb.v             # Self-Checking Testbench
+â”œâ”€â”€ docs/
+â”œâ”€â”€ .gitignore
+â”œâ”€â”€ LICENSE
+â””â”€â”€ README.md
 ```
 
 ---
 
-## 🚀 Simulation Guide
+## ðŸš€ Simulation Guide
 
 ### Using Icarus Verilog
 
@@ -198,12 +198,12 @@ gtkwave riscv_tb.vcd
 ================================================================
   TEST SUMMARY: 9 PASSED, 0 FAILED
 ================================================================
-  >>> ALL TESTS PASSED — PROCESSOR WORKS CORRECTLY! <<<
+  >>> ALL TESTS PASSED â€” PROCESSOR WORKS CORRECTLY! <<<
 ```
 
 ---
 
-## 🧪 Test Program
+## ðŸ§ª Test Program
 
 The instruction memory is pre-loaded with an assembly test program:
 
@@ -226,18 +226,18 @@ ADDI x9, x0, 42       # x9 = 42 (branch target)
 
 ---
 
-## 💡 Applications
+## ðŸ’¡ Applications
 
-- 🎓 **Computer Architecture** — Learn processor design hands-on
-- 🔬 **FPGA Prototyping** — Deploy on Xilinx/Intel FPGAs
-- 🏭 **SoC Design** — Foundation for multi-core processor design
-- 📚 **Academic Research** — Extend with pipeline, cache, or peripherals
+- ðŸŽ“ **Computer Architecture** â€” Learn processor design hands-on
+- ðŸ”¬ **FPGA Prototyping** â€” Deploy on Xilinx/Intel FPGAs
+- ðŸ­ **SoC Design** â€” Foundation for multi-core processor design
+- ðŸ“š **Academic Research** â€” Extend with pipeline, cache, or peripherals
 
 ---
 
-## 🔮 Future Enhancements
+## ðŸ”® Future Enhancements
 
-- [ ] 5-stage pipeline (IF → ID → EX → MEM → WB)
+- [ ] 5-stage pipeline (IF â†’ ID â†’ EX â†’ MEM â†’ WB)
 - [ ] Hazard detection and forwarding unit
 - [ ] Branch prediction unit
 - [ ] Cache memory (L1 I-Cache, D-Cache)
@@ -246,17 +246,18 @@ ADDI x9, x0, 42       # x9 = 42 (branch target)
 
 ---
 
-## 👨‍💻 Author
+## ðŸ‘¨â€ðŸ’» Author
 
 **Daggolu Hari Krishna**
 B.Tech ECE | JNTUA College of Engineering, Kalikiri
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat-square&logo=linkedin)](https://linkedin.com/in/harikrishnadaggolu)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-blue?style=flat-square&logo=linkedin)](https://www.linkedin.com/in/contacthari88/)
 [![Email](https://img.shields.io/badge/Email-Contact-red?style=flat-square&logo=gmail)](mailto:haridaggolu@gmail.com)
+[![GitHub](https://img.shields.io/badge/GitHub-Profile-black?style=flat-square&logo=github)](https://github.com/HariKrishna0088)
 [![GitHub](https://img.shields.io/badge/GitHub-Harikrishna__08-black?style=flat-square&logo=github)](https://github.com/Harikrishna_08)
 
 ---
 
 <p align="center">
-  ⭐ If you found this project helpful, please give it a star! ⭐
+  â­ If you found this project helpful, please give it a star! â­
 </p>
